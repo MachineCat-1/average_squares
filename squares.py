@@ -50,13 +50,26 @@ def convert_numbers(list_of_strings):
     return [float(number_string) for number_string in all_numbers]
 
 
+import argparse
+
+def convert_numbers(strings):
+    return [float(num) for num in strings]
+
+def average_of_squares(numbers, weights=None):
+    if weights is None:
+        return sum(x ** 2 for x in numbers) / len(numbers)
+    else:
+        return sum(x ** 2 * w for x, w in zip(numbers, weights)) / sum(weights)
+
 if __name__ == "__main__":
-    numbers_strings = ["1","2","4"]
-    weight_strings = ["1","1","1"]        
+    parser = argparse.ArgumentParser(description="Calculate the weighted average of squares of numbers.")
+    parser.add_argument('numbers', metavar='N', type=float, nargs='+', help='Numbers for which to calculate the average of squares')
     
-    numbers = convert_numbers(numbers_strings)
-    weights = convert_numbers(weight_strings)
-    
+    args = parser.parse_args()
+
+    numbers = args.numbers
+    weights = None  
+
     result = average_of_squares(numbers, weights)
     
     print(result)
